@@ -57,6 +57,19 @@
             .scroll-fade { opacity: 1; transform: none; transition: none; }
         }
 
+        /* ── Scroll progress ── */
+        .scroll-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary) 0%, #64c8f0 100%);
+            border-radius: 0 2px 2px 0;
+            transition: width 0.05s linear;
+            pointer-events: none;
+        }
+
         /* ── Nav ── */
         nav {
             display: flex;
@@ -304,6 +317,35 @@
             flex-wrap: wrap;
         }
 
+        .hero-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .hero-stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .hero-stars svg {
+            width: 16px;
+            height: 16px;
+            fill: #f59e0b;
+        }
+
+        .hero-rating-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .hero-rating-text strong {
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
         .hero-img-wrapper {
             flex-shrink: 0;
             position: relative;
@@ -444,7 +486,15 @@
             margin-bottom: 20px;
         }
 
-        .feature-icon svg { width: 26px; height: 26px; }
+        .feature-icon svg {
+            width: 26px;
+            height: 26px;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .feature-card:hover .feature-icon svg {
+            transform: scale(1.2) rotate(-6deg);
+        }
 
         .feature-card h3 {
             font-size: 1.05rem;
@@ -581,7 +631,6 @@
     </style>
 </head>
 <body>
-
     <nav>
         <a class="logo" href="#">
             <div class="logo-icon">
@@ -605,6 +654,7 @@
                 <span></span><span></span><span></span>
             </button>
         </div>
+        <div class="scroll-progress" id="scrollProgress"></div>
     </nav>
 
     <div class="mobile-menu" id="mobileMenu">
@@ -647,6 +697,16 @@
                     <a href="https://apps.apple.com/us/app/care-binder/id6754263793">
                         <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on App Store" style="width:160px;display:block;">
                     </a>
+                </div>
+                <div class="hero-rating">
+                    <div class="hero-stars" aria-label="5 out of 5 stars">
+                        <svg viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L10 13.27l-4.77 2.44.91-5.32L2.27 6.62l5.34-.78z"/></svg>
+                        <svg viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L10 13.27l-4.77 2.44.91-5.32L2.27 6.62l5.34-.78z"/></svg>
+                        <svg viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L10 13.27l-4.77 2.44.91-5.32L2.27 6.62l5.34-.78z"/></svg>
+                        <svg viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L10 13.27l-4.77 2.44.91-5.32L2.27 6.62l5.34-.78z"/></svg>
+                        <svg viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L10 13.27l-4.77 2.44.91-5.32L2.27 6.62l5.34-.78z"/></svg>
+                    </div>
+                    <span class="hero-rating-text"><strong>5.0</strong> on the App Store</span>
                 </div>
             </div>
         </div>
@@ -758,6 +818,14 @@
     </footer>
 
     <script>
+        // Scroll progress bar
+        const scrollProgress = document.getElementById('scrollProgress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            scrollProgress.style.width = (scrollTop / docHeight * 100) + '%';
+        }, { passive: true });
+
         const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
 
